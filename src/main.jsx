@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeContextProvider } from './context/ThemeContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <BrowserRouter basename={"/Landing-react"}>
+    <BrowserRouter basename={"/"}>
         <ThemeContextProvider>
             <App />
         </ThemeContextProvider>
