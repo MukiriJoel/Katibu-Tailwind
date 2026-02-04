@@ -9,7 +9,7 @@ export const navLinks = [
     },
     {
         name: "Modules",
-        href: "/pricing",
+        href: "/modules",
     },
     {
         name: "Docs",
