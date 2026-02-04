@@ -13,13 +13,7 @@ export default function Pricing() {
             <div className="flex flex-wrap items-center justify-center gap-6 mt-16">
                 {pricingData.map((plan, index) => (
                     <div key={index} className={`p-6 flex flex-col h-full rounded-2xl max-w-75 !h-80  w-full shadow-[0px_4px_26px] shadow-black/6 ${plan.mostPopular ? "relative pt-12 bg-gradient-to-b from-indigo-600 to-violet-600" : "bg-white/50 dark:bg-gray-800/50 border border-slate-200 dark:border-slate-800"}`}>
-                        {/* {plan.mostPopular && (
-                            <div className="flex items-center text-xs gap-1 py-1.5 px-2 text-purple-600 absolute top-4 right-4 rounded bg-white font-medium">
-                                <SparklesIcon size={14} />
-                                <p>Most Popular</p>
-                            </div>
-                        )} */}
-                        {/* <p className={plan.mostPopular && "text-white"}>{plan.icon}</p> */}
+         
                         <plan.icon size={24}/>
                         <h5 className={`text-3xl font-semibold mt-1 ${plan.mostPopular && "text-white"}`}>{plan.title}<span className={`font-normal text-sm ${plan.mostPopular ? "text-white" : "text-slate-300"}`}></span></h5>
                         <hr className={`my-8 ${plan.mostPopular ? "border-gray-300" : "border-slate-300 dark:border-slate-700"}`} />
