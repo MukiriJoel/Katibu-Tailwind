@@ -1,15 +1,51 @@
 "use client";
 import { VideoIcon } from "lucide-react";
 import Marquee from "react-fast-marquee";
-
+import * as yup from 'yup';
 import { featuresData } from "../data/featuresData";
 import SectionTitle from "../components/SectionTitle";
 // import { useThemeContext } from "../context/ThemeContext";
 import { FaqSection } from "../sections/FaqSection";
 import Pricing from "../sections/Pricing";
+import { Controller,useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { CircularProgress } from "@mui/material"
+import { useState } from "react"
+import { toast } from "sonner";
+import { postUserInfo } from "../store/userThunks";
+
+const schema= yup.object().shape({
+  name: yup.string().required(),
+  email: yup.string().email('Invalid Email').required(),
+  company: yup.string().optional(),
+  message: yup.string().optional(),
+})
 
 export default function Page() {
+ const [loading, setLoading] = useState(false);
+  const {control,handleSubmit,formState:{errors}} =useForm({
+    resolver:yupResolver(schema)  })
 //   const { theme } = useThemeContext();
+
+    const onSubmit= async(data)=>{
+        const userPayload={
+          name:data.name,
+          email:data.email,
+          company:data.company,
+          message:data.message
+        }
+
+        try{
+          setLoading(true);
+          const res = await postUserInfo(userPayload);
+          toast.success(res?.message || "posted successfully")
+        }catch(error){
+          console.log(error)
+           toast.warning("Failed to submit")
+        }finally{
+          setLoading(false);
+        }
+    }
   return (
     <>
       <div className="flex flex-col items-center justify-center text-center px-4 bg-[url('/assets/light-hero-gradient.svg')] dark:bg-[url('/assets/dark-hero-gradient.svg')] bg-no-repeat bg-cover">
@@ -86,21 +122,21 @@ export default function Page() {
       <FaqSection />
 
       <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-20">
-        <div class="relative w-full max-w-6xl mx-auto overflow-hidden rounded-3xl ">
+        <div className="relative w-full max-w-6xl mx-auto overflow-hidden rounded-3xl ">
           <img
             src="https://i.postimg.cc/dQgvPfyg/pexels-photo-3182773.webp"
             alt="Business team working together"
-            class="w-full h-[420px] object-cover"
+            className="w-full h-[420px] object-cover"
           />
 
-          <div class="absolute inset-0 bg-black/45"></div>
+          <div className="absolute inset-0 bg-black/45"></div>
 
-          <div class="absolute inset-0 flex items-end">
-            <div class="p-8 md:p-12 max-w-2xl">
-              <h2 class="text-white text-2xl md:text-4xl font-bold leading-tight">
+          <div className="absolute inset-0 flex items-end">
+            <div className="p-8 md:p-12 max-w-2xl">
+              <h2 className="text-white text-2xl md:text-4xl font-bold leading-tight">
                 Ready to transform your business?
               </h2>
-              <p class="mt-3 text-white/90 text-sm md:text-base">
+              <p className="mt-3 text-white/90 text-sm md:text-base">
                 Join hundreds of businesses already using Katibu ERP to
                 streamline operations and drive growth.
               </p>
@@ -125,45 +161,45 @@ export default function Page() {
             Contact sales
           </button>
         </div> */}
-        <section class="max-w-7xl mx-auto px-6 py-16">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <section className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
-              <h2 class="text-3xl font-semibold mt-16 mb-4">
+              <h2 className="text-3xl font-semibold mt-16 mb-4">
                 Ready to get started?
               </h2>
 
-              <p class="text-slate-600 dark:text-slate-200 max-w-xl mx-auto">
+              <p className="text-slate-600 dark:text-slate-200 max-w-xl mx-auto">
                 Contact us today to schedule a personalized demo and discover
                 how Katibu ERP can streamline your operations and drive business
                 growth.
               </p>
 
-              <div class="mt-10 space-y-6">
-                <div class="flex items-start gap-4">
-                  <span class="text-gray-700">📧</span>
+              <div className="mt-10 space-y-6">
+                <div className="flex items-start gap-4">
+                  <span className="text-gray-700">📧</span>
                   <div className="text-left">
-                    <p class="text-slate-600 dark:text-slate-200">Email Us</p>
-                    <p class="text-slate-600 dark:text-slate-200">
+                    <p className="text-slate-600 dark:text-slate-200">Email Us</p>
+                    <p className="text-slate-600 dark:text-slate-200">
                       info@katibu.africa
                     </p>
                   </div>
                 </div>
 
-                <div class="flex items-start gap-4">
-                  <span class="text-gray-700">📞</span>
+                <div className="flex items-start gap-4">
+                  <span className="text-gray-700">📞</span>
                   <div className="text-left">
-                    <p class="text-slate-600 dark:text-slate-200">Call Us</p>
-                    <p class="text-slate-600 dark:text-slate-200">
+                    <p className="text-slate-600 dark:text-slate-200">Call Us</p>
+                    <p className="text-slate-600 dark:text-slate-200">
                       +254 708 538 435
                     </p>
                   </div>
                 </div>
 
-                <div class="flex items-start gap-4">
-                  <span class="text-gray-700">📍</span>
+                <div className="flex items-start gap-4">
+                  <span className="text-gray-700">📍</span>
                   <div className="text-left">
-                    <p class="text-slate-600 dark:text-slate-200">Visit Us</p>
-                    <p class="text-slate-600 dark:text-slate-200">
+                    <p className="text-slate-600 dark:text-slate-200">Visit Us</p>
+                    <p className="text-slate-600 dark:text-slate-200">
                       Nairobi, Kenya
                     </p>
                   </div>
@@ -171,61 +207,94 @@ export default function Page() {
               </div>
             </div>
 
-            <div class="bg-white rounded-2xl bg-white/50 dark:bg-gray-800/50 border border-slate-200 dark:border-slate-800 p-8 md:p-10">
-              <h3 class="text-xl font-semibold text-gray-900 mb-6">
+            <div className="bg-white rounded-2xl bg-white/50 dark:bg-gray-800/50 border border-slate-200 dark:border-slate-800 p-8 md:p-10">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">
                 Request a Demo
               </h3>
 
-              <form class="space-y-5 text-left">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 text-left">
                 <div>
-                  <label class="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
                     Full Name*
                   </label>
-                  <input
+                  <Controller name="name" control={control} defaultValue="" 
+                  render={({field})=>(
+                        <input
+                        {...field}
                     type="text"
                     placeholder="John Doe"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
                   />
+                  )}
+                />
+                 {errors.name && (
+                        <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+                    )}
                 </div>
 
                 <div>
-                  <label class="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
                     Email Address*
                   </label>
+                  <Controller name="email" control={control} defaultValue="" 
+                  render={({field})=>(
                   <input
+                  {...field}
                     type="email"
                     placeholder="john@example.com"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
                   />
+                     )}
+                    />
+                    {errors.email && (
+                        <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                    )}
                 </div>
 
                 <div>
-                  <label class="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
                     Company Name
                   </label>
+                  <Controller name="company" control={control} defaultValue="" 
+                  render={({field})=>(
                   <input
+                  {...field}
                     type="text"
                     placeholder="Acme Inc."
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
                   />
+                   )}
+                    />
+                    {errors.company && (
+                        <p className="text-red-500 text-xs mt-1">{errors.company.message}</p>
+                    )}
                 </div>
 
                 <div>
-                  <label class="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-200 mb-1">
                     Message
                   </label>
+                  <Controller name="message" control={control} defaultValue="" 
+                  render={({field})=>(
                   <textarea
+                  {...field}
                     rows="4"
                     placeholder="Tell us about your business needs..."
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[#fc7d5e] focus:outline-none"
                   ></textarea>
+                  )}
+                    />
+                     {errors.message && (
+                        <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>
+                    )}
                 </div>
 
                 <button
+                  disabled={loading}
                   type="submit"
-                  class="w-full bg-[#fc7d5e] hover:bg-[#e06347] text-white font-semibold py-3 rounded-lg transition"
+                  className="w-full bg-[#fc7d5e] hover:bg-[#e06347] text-white font-semibold py-3 rounded-lg transition"
                 >
-                  Submit Request
+                   {loading ? <CircularProgress size={20} /> : "Submit Request"}
                 </button>
               </form>
             </div>
