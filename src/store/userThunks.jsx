@@ -10,7 +10,7 @@ export const postUserInfo =
         message
       });
     console.log("userres",res)
-      return res?.data?.body;
+      return res?.data;
     } catch (error) {
      console.log(error.response?.data || "Fetching failed") 
       return 

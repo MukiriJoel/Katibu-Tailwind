@@ -38,7 +38,7 @@ export default function Page() {
         try{
           setLoading(true);
           const res = await postUserInfo(userPayload);
-          toast.success(res?.data?.message)
+          toast.success(res?.message)
         }catch(error){
           console.log(error)
            toast.warning("Failed to submit")
