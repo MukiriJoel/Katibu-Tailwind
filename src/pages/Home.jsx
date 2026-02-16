@@ -17,8 +17,8 @@ import { postUserInfo } from "../store/userThunks";
 const schema= yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email('Invalid Email').required(),
-  company: yup.string().optional(),
-  message: yup.string().optional(),
+  company: yup.string().required(),
+  message: yup.string().required().min(10,"Message must be at least 10 characters"),
 })
 
 export default function Page() {
